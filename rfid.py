@@ -8,6 +8,7 @@ def read_raw():
     
 
     while out == None:
+        print("reading...")
         (stat, tag_type) = rdr.request(rdr.REQIDL)
         if stat == rdr.OK:
 
@@ -26,6 +27,8 @@ def read_raw():
                         print("Authentication error")
                 else:
                     print("Failed to select tag")
+        else:
+            print(stat)
     
     return out
 
@@ -59,3 +62,6 @@ def write_raw(data = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\
                 else:
                     print("Failed to select tag")
 
+if __name__ == "__main__":
+    print(write_raw())
+    print(read_raw())

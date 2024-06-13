@@ -62,3 +62,12 @@ class Knob:
 
         if self.count > self.max:
             self.count = self.max
+
+if __name__ == "__main__":
+    knob = Knob(14, 20, 21)
+
+    while True:
+        knob.poll()
+        count, button = knob.get()
+
+        print(count, button)

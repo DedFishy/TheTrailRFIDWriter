@@ -8,9 +8,18 @@ SCL_PIN = Pin(27)
 
 i2c = I2C(id=1, scl=SCL_PIN, sda=SDA_PIN, freq=400000)
 
+
+
 print("Waiting for I2C initialization...")
 sleep(1)
-display = Seg7x4(i2c, 0x70, True)
+
+while True:
+    try:
+        display = Seg7x4(i2c, 0x70, True)
+        break
+    except OSError as e:
+        print("Failure: " + str(e))
+        pass
 
 display_value = 0
 
@@ -42,3 +51,13 @@ def update_display():
             sleep(0.2)
 
 def create_display_thread(): return _thread.start_new_thread(update_display, ())
+
+if __name__ == "__main__":
+    print("Making display thread!")
+    is_loading = False
+    display_value = "8888"
+    while True:
+        try:
+            update_display()
+        except OSError as e:
+            print("Error: " + str(e))
